@@ -1,0 +1,42 @@
+run:
+  go: '1.21'
+
+linters:
+  disable-all: true
+  enable:
+    - revive
+    - govet
+    - unused
+    - ineffassign
+    - typecheck
+    - goconst
+    - exportloopref
+    - staticcheck
+    - gosimple
+    - unconvert
+    - goconst
+    - goimports
+    - misspell
+    - unparam
+    - goerr113
+    - prealloc
+    - gocritic
+    - gosec
+    - errorlint
+    - godot
+    - paralleltest
+    - wastedassign
+    - tagliatelle
+
+linters-settings:
+  govet:
+    enable-all: true
+    disable:
+      - shadow
+
+issues:
+  exclude-use-default: false
+  exclude-rules:
+    - path: (.+)_test.go
+      linters:
+        - govet
