@@ -36,7 +36,7 @@ func TestStream_ShouldReadRows(t *testing.T) {
 		{
 			name: "read rows errors",
 			in: &mockTRows[testObject]{
-				scanErr: errors.New("scan error"),
+				scanErr: errors.New("scan error"), // nolint:all
 				idx:     -1,
 				data: []testObject{
 					{"1"},
@@ -44,7 +44,7 @@ func TestStream_ShouldReadRows(t *testing.T) {
 				},
 			},
 			expResult: []sqlstream.Entry[testObject]{
-				{Err: errors.New("scan error")},
+				{Err: errors.New("scan error")}, // nolint:all
 			},
 		},
 	}

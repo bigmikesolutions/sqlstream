@@ -38,18 +38,18 @@ func TestNewReader_ShouldReadRows(t *testing.T) {
 		{
 			name: "handle error while getting column names",
 			rows: &mockRows{
-				columnsErr: errors.New("columns error"),
+				columnsErr: errors.New("columns error"), // nolint:all
 			},
 			columns:      testStructMapping,
-			expReaderErr: fmt.Errorf("column names: %w", errors.New("columns error")),
+			expReaderErr: fmt.Errorf("column names: %w", errors.New("columns error")), // nolint:all
 		},
 		{
 			name: "handle error while scanning",
 			rows: &mockRows{
-				scanErr: errors.New("columns error"),
+				scanErr: errors.New("columns error"), // nolint:all
 			},
 			columns:        testStructMapping,
-			expScanningErr: fmt.Errorf("column names: %w", errors.New("columns error")),
+			expScanningErr: fmt.Errorf("column names: %w", errors.New("columns error")), // nolint:all
 		},
 	}
 
