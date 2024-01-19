@@ -1,6 +1,6 @@
 package sql
 
-// Any creates a custom scanner for a column with a specified scan function.
+// Any scan any value of a field based on type.
 func Any[T, V any](scan func(*T, V)) FieldScanner[T, V] {
 	return func(t *T, v V) error {
 		scan(t, v)
@@ -8,8 +8,8 @@ func Any[T, V any](scan func(*T, V)) FieldScanner[T, V] {
 	}
 }
 
-// Null creates a custom scanner for a nullable column with a specified default value and scan function.
-func Null[T, V any](def V, scan func(*T, V)) FieldScanner[T, *V] {
+// NotNull scan value of a field or apply default value.
+func NotNull[T, V any](def V, scan func(*T, V)) FieldScanner[T, *V] {
 	return func(t *T, v *V) error {
 		if v != nil {
 			scan(t, *v)

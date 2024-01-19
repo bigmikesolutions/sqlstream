@@ -8,7 +8,7 @@ type (
 		Next() bool
 		// Scan copies the columns in the current row into the values pointed at by dest. The number of values in dest must be the same as the number of columns in Rows.
 		Scan(dest ...any) error
-		// StructMapping returns the column names. StructMapping returns an error if the rows are closed.
+		// Columns returns the column names. Columns returns an error if the rows are closed.
 		Columns() ([]string, error)
 		// Err returns the error, if any, that was encountered during iteration. Err may be called after an explicit or implicit Close.
 		Err() error
