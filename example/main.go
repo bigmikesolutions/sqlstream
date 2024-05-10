@@ -27,7 +27,7 @@ func main() {
 			s.FirstName = v
 		}),
 		"last_name": sql.Any(func(s *Student, v string) {
-			s.FirstName = v
+			s.LastName = v
 		}),
 		"age": sql.Any(func(s *Student, v int) {
 			s.Age = v
