@@ -1,6 +1,7 @@
 # sqlstream
 
-Small library to handle SQL queries as a streams (channels).
+Small library to handle SQL queries as streams (channels).
+
 Mapping is done in functional fashion without reflection.
 
 ## Usage
