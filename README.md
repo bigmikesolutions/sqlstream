@@ -2,7 +2,11 @@
 
 Small library to handle SQL queries as streams (channels).
 
-Mapping is done in functional fashion without reflection.
+Main concerns:
+
+* Mapping is done in functional fashion without reflection.
+
+* Memory usage: mapping and result appears row by row instead all at once
 
 ## Usage
 
