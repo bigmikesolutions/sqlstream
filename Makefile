@@ -26,3 +26,6 @@ lint: go-lint
 test:
 	go test -cover -race -count=100 -short -race ./...
 
+.PHONY: bench
+bench:
+	go test -bench . -test.benchmem -test.count 2 -test.benchtime 2s

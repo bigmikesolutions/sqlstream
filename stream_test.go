@@ -9,6 +9,7 @@ import (
 )
 
 type testObject struct {
+	ID     int
 	Field1 string
 }
 
@@ -25,12 +26,12 @@ func TestStream_ShouldReadRows(t *testing.T) {
 		{
 			name: "read rows",
 			in: newMockTRows[testObject]([]testObject{
-				{"1"},
-				{"2"},
+				{1, "1"},
+				{2, "2"},
 			}),
 			expResult: []sqlstream.Entry[testObject]{
-				{Value: testObject{"1"}},
-				{Value: testObject{"2"}},
+				{Value: testObject{1, "1"}},
+				{Value: testObject{2, "2"}},
 			},
 		},
 		{
@@ -39,8 +40,8 @@ func TestStream_ShouldReadRows(t *testing.T) {
 				scanErr: errors.New("scan error"), // nolint:all
 				idx:     -1,
 				data: []testObject{
-					{"1"},
-					{"2"},
+					{1, "1"},
+					{2, "2"},
 				},
 			},
 			expResult: []sqlstream.Entry[testObject]{

@@ -8,6 +8,16 @@ Main concerns:
 
 * Memory usage: mapping and result appears row by row instead all at once
 
+## Benchmark results
+
+First implementation required 1 memory allocation per operation (row result coming from DB), i.e.: 
+
+```go
+pkg: sqlstream
+BenchmarkStream_ReadRows-10     14924950               150.9 ns/op            24 B/op          1 allocs/op
+BenchmarkStream_ReadRows-10     15875574               150.4 ns/op            24 B/op          1 allocs/op
+```
+
 ## Usage
 
 All samples of usage can be found in `example` directory.
