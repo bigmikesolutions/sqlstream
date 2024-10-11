@@ -1,10 +1,11 @@
 package db
 
 import (
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"sqlstream"
 	"sqlstream/sql"
-	"testing"
 )
 
 func ReadAll(reader sql.TRows[Student]) map[string]Student {

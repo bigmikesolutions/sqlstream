@@ -2,11 +2,13 @@ package test
 
 import (
 	"context"
-	"github.com/testcontainers/testcontainers-go/modules/postgres"
 	"os"
-	"sqlstream/test/db"
 	"testing"
 	"time"
+
+	"sqlstream/test/db"
+
+	"github.com/testcontainers/testcontainers-go/modules/postgres"
 )
 
 const defaultTimeout = 5 * time.Second

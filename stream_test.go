@@ -2,8 +2,9 @@ package sqlstream_test
 
 import (
 	"errors"
-	"sqlstream"
 	"testing"
+
+	"sqlstream"
 
 	"github.com/stretchr/testify/assert"
 )

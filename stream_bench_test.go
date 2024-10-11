@@ -2,8 +2,9 @@ package sqlstream_test
 
 import (
 	"fmt"
-	"sqlstream"
 	"testing"
+
+	"sqlstream"
 )
 
 func BenchmarkStream_ReadRows(b *testing.B) {
@@ -12,7 +13,6 @@ func BenchmarkStream_ReadRows(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		<-stream
 	}
-
 }
 
 func BenchmarkStream_ReadRows_Debug(b *testing.B) {
@@ -36,7 +36,6 @@ func BenchmarkStream_ReadRows_Debug(b *testing.B) {
 			break
 		}
 	}
-
 }
 
 func newBenchStream() sqlstream.ReadStream[testObject] {
