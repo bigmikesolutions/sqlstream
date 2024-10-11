@@ -8,6 +8,8 @@ Main concerns:
 
 * Memory usage: mapping and result appears row by row instead all at once
 
+* One-to-many/many-to-many even for nested structures
+
 ## Benchmark results
 
 First implementation required 1 memory allocation per operation (row result coming from DB), i.e.: 
