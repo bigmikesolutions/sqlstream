@@ -26,8 +26,6 @@ func StartPostgres(ctx context.Context) (*postgres.PostgresContainer, CancelFn, 
 	postgresContainer, err := postgres.Run(
 		ctx,
 		"postgres",
-		//postgres.WithInitScripts(filepath.Join("testdata", "init-user-db.sh")),
-		//postgres.WithConfigFile(filepath.Join("testdata", "my-postgres.conf")),
 		postgres.WithDatabase(dbName),
 		postgres.WithUsername(dbUser),
 		postgres.WithSQLDriver(driverName),
