@@ -6,9 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"sqlstream/test/db"
-
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
+	"sqlstream/test/db"
 )
 
 const defaultTimeout = 5 * time.Second

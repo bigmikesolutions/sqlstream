@@ -4,11 +4,10 @@ import (
 	"context"
 	"testing"
 
-	"sqlstream/sql"
-	"sqlstream/test/db"
-
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"sqlstream/sql"
+	"sqlstream/test/db"
 )
 
 func Test_ShouldStreamDataFromPostgres(t *testing.T) {

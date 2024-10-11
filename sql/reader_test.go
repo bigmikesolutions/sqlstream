@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"testing"
 
-	"sqlstream/sql"
-
 	"github.com/stretchr/testify/assert"
+	"sqlstream/sql"
 )
 
 // nolint: err113
