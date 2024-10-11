@@ -23,11 +23,6 @@ func Test_ShouldStreamDataFromPostgres(t *testing.T) {
 
 	reader, err := sql.NewReader(rows, db.Mapping)
 	require.NoError(t, err, "reader error")
-	defer func() {
-		if err := reader.Close(); err != nil {
-			t.Errorf("reader close error: %v", err)
-		}
-	}()
 
 	students := db.ReadAll(reader)
 
