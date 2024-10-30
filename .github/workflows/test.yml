@@ -4,7 +4,7 @@ on:
       - main
   pull_request:
     branches:
-      - *
+      - main
 
 env:
   GO_VERSION: "1.23.2"
@@ -14,6 +14,7 @@ name: run tests
 jobs:
   lint:
     runs-on: self-hosted
+    timeout-minutes: 5
     steps:
       - name: Install Go
         uses: actions/setup-go@v5
@@ -27,13 +28,22 @@ jobs:
           version: ${{ env.GO_LANG_CI_LINT_VERSION }}
 
   test:
-    runs-on: default
+    runs-on: self-hosted
+    timeout-minutes: 5
+
+    services:
+      docker:
+        image: docker:stable-dind
+        options: --privileged
+        volumes:
+          - /var/lib/docker
+
+
     steps:
       - name: Install Go
-        if: success()
         uses: actions/setup-go@v5
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version: ${{ env.GO_VERSION }}
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run tests
@@ -41,6 +51,7 @@ jobs:
 
   coverage:
     runs-on: self-hosted
+    timeout-minutes: 5
     steps:
       - name: Install Go
         if: success()

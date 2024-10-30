@@ -5,9 +5,11 @@ import (
 )
 
 const (
+	// SelectAllFromStudents test query to get all data from students table.
 	SelectAllFromStudents = `SELECT * FROM students`
 )
 
+// Student student with test data.
 type Student struct {
 	ID        string `db:"id"`
 	FirstName string `db:"first_name"`
@@ -15,6 +17,7 @@ type Student struct {
 	Age       int    `db:"age"`
 }
 
+// Mapping mapping for student data.
 var Mapping = sql.StructMapping[Student]{
 	"id": sql.Any(func(s *Student, v string) {
 		s.ID = v

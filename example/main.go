@@ -1,13 +1,16 @@
+// package main for examples
 package main
 
 import (
 	"fmt"
 
-	"github.com/jmoiron/sqlx"
 	"sqlstream"
 	"sqlstream/sql"
+
+	"github.com/jmoiron/sqlx"
 )
 
+// Student demo data.
 type Student struct {
 	FirstName string `db:"first_name"`
 	LastName  string `db:"last_name"`

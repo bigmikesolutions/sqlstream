@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"sqlstream/sql"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // nolint: err113
@@ -54,7 +55,6 @@ func TestNewReader_ShouldReadRows(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			reader, err := sql.NewReader(tt.rows, tt.columns)

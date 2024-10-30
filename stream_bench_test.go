@@ -45,7 +45,7 @@ func newBenchStream() sqlstream.ReadStream[testObject] {
 		Field1: "",
 	}
 	gen := newTRowsGenerator[testObject](func() (*testObject, error) {
-		id += 1
+		id++
 		obj.ID = id
 		return obj, nil
 	})

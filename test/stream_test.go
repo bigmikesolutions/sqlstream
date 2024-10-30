@@ -4,13 +4,16 @@ import (
 	"context"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"sqlstream/sql"
 	"sqlstream/test/db"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func Test_ShouldStreamDataFromPostgres(t *testing.T) {
+	t.Parallel()
+
 	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
 	defer cancel()
 	pgConn, err := db.ConnectToPostgres(ctx, postgresContainer)
