@@ -1,5 +1,5 @@
 run:
-  go: '1.21'
+  go: '1.23'
 
 linters:
   disable-all: true
@@ -10,7 +10,7 @@ linters:
     - ineffassign
     - typecheck
     - goconst
-    - exportloopref
+    - copyloopvar
     - staticcheck
     - gosimple
     - unconvert
@@ -18,7 +18,7 @@ linters:
     - goimports
     - misspell
     - unparam
-    - goerr113
+    - err113
     - prealloc
     - gocritic
     - gosec

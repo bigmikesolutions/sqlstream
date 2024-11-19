@@ -36,7 +36,14 @@ lint: go-lint go-fumpt govulncheck
 
 .PHONY: test
 test:
-	go test -cover -race -count=100 -short -race ./...
+	go clean -testcache
+	go test -cover -race -count=100 ./...
+
+.PHONY: coverage
+coverage:
+	go test -v -short -covermode=count -coverprofile=coverage.out ./sql/...
+	go tool cover -html=coverage.out -o coverage.html
+	go tool cover -func=coverage.out
 
 .PHONY: bench
 bench:

@@ -6,16 +6,20 @@ import (
 	"testing"
 	"time"
 
-	"github.com/testcontainers/testcontainers-go/modules/postgres"
 	"sqlstream/test/db"
+
+	"github.com/testcontainers/testcontainers-go/modules/postgres"
 )
 
-const defaultTimeout = 5 * time.Second
+const (
+	defaultTimeout     = 5 * time.Second
+	dockerSetupTimeout = 30 * time.Second
+)
 
 var postgresContainer *postgres.PostgresContainer
 
 func TestMain(m *testing.M) {
-	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), dockerSetupTimeout)
 	defer cancel()
 
 	pg, pgCancel, err := db.StartPostgres(ctx)
@@ -27,5 +31,5 @@ func TestMain(m *testing.M) {
 	postgresContainer = pg
 
 	code := m.Run()
-	os.Exit(code)
+	defer os.Exit(code)
 }

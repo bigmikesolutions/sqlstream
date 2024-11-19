@@ -5,9 +5,9 @@ import (
 	"log"
 	"time"
 
-	_ "github.com/jackc/pgx/v5/stdlib"
+	_ "github.com/jackc/pgx/v5/stdlib" // drivers
 	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
+	_ "github.com/lib/pq" // drivers
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
 	"github.com/testcontainers/testcontainers-go/wait"
@@ -21,8 +21,10 @@ const (
 	dbInitScript   = "db/init.sh"
 )
 
+// CancelFn cancel function for stopping/clearing DB related stuff.
 type CancelFn = func()
 
+// StartPostgres starts PG in a docker.
 func StartPostgres(ctx context.Context) (*postgres.PostgresContainer, CancelFn, error) {
 	postgresContainer, err := postgres.Run(
 		ctx,
@@ -53,6 +55,7 @@ func StartPostgres(ctx context.Context) (*postgres.PostgresContainer, CancelFn, 
 	return postgresContainer, cancelFn, nil
 }
 
+// ConnectToPostgres created connection to PG within docker container.
 func ConnectToPostgres(ctx context.Context, c *postgres.PostgresContainer) (*sqlx.DB, error) {
 	cs, err := c.ConnectionString(ctx)
 	if err != nil {
