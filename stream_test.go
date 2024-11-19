@@ -3,6 +3,7 @@ package sqlstream_test
 import (
 	"errors"
 	"testing"
+	"time"
 
 	"sqlstream"
 
@@ -60,6 +61,8 @@ func TestStream_ShouldReadRows(t *testing.T) {
 			for entry := range sqlstream.Read[testObject](tt.in) {
 				results = append(results, entry)
 			}
+
+			<-time.After(10 * time.Millisecond)
 
 			assert.Equal(t, tt.expResult, results)
 			assert.True(t, tt.in.Closed(), "expected rows to be closed")

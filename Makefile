@@ -38,6 +38,12 @@ lint: go-lint go-fumpt govulncheck
 test:
 	go test -cover -race -count=100 -short -race ./...
 
+.PHONY: coverage
+coverage:
+	go test -v ./sql/... -covermode=count -coverprofile=coverage.out
+	go tool cover -html=coverage.out -o coverage.html
+	go tool cover -func=coverage.out
+
 .PHONY: bench
 bench:
 	go test -bench . -test.benchmem -test.count 2 -test.benchtime 2s

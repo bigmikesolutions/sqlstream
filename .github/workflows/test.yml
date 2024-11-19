@@ -7,13 +7,13 @@ on:
       - main
 
 env:
-  GO_VERSION: "1.23.2"
+  GO_VERSION: "1.23.3"
   GO_LANG_CI_LINT_VERSION: "v1.61.0"
 
 name: run tests
 jobs:
   lint:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - name: Install Go
@@ -26,18 +26,15 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: ${{ env.GO_LANG_CI_LINT_VERSION }}
-
+  
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     timeout-minutes: 5
 
     services:
       docker:
-        image: docker:stable-dind
+        image: docker:dind
         options: --privileged
-        volumes:
-          - /var/lib/docker
-
 
     steps:
       - name: Install Go
@@ -50,7 +47,7 @@ jobs:
         run: make test
 
   coverage:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - name: Install Go
@@ -60,12 +57,16 @@ jobs:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Install golang coverage
+        run: |
+          go install github.com/axw/gocov/gocov@latest
+          go install github.com/matm/gocov-html/cmd/gocov-html@latest
       - name: Calc coverage
         run: |
-          go test -v -covermode=count -coverprofile=coverage.out
-      - name: Coveralls
-        uses: coverallsapp/github-action@643bc377ffa44ace6394b2b5d0d3950076de9f63 #2.3.0
+          go test -v ./sql/... -covermode=count -coverprofile=coverage.out
+          gocov convert coverage.out | gocov-html > gocov.html
+      - name: Upload coverage to GitHub
+        uses: actions/upload-artifact@v4
         with:
-          github-token: ${{ secrets.github_token }}
-          file: coverage.out
-          format: golang
+          name: coverage-report
+          path: gocov.html
