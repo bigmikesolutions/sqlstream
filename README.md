@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/bigmikesolutions/sqlstream/graph/badge.svg?token=LCSGUE3GAG)](https://codecov.io/gh/bigmikesolutions/sqlstream)
+
 # sqlstream
 
 Small library to handle SQL queries as streams (channels).

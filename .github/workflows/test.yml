@@ -57,16 +57,10 @@ jobs:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Install golang coverage
+      - name: Unit tests with coverage
         run: |
-          go install github.com/axw/gocov/gocov@latest
-          go install github.com/matm/gocov-html/cmd/gocov-html@latest
-      - name: Calc coverage
-        run: |
-          go test -v ./sql/... -covermode=count -coverprofile=coverage.out
-          gocov convert coverage.out | gocov-html > gocov.html
-      - name: Upload coverage to GitHub
-        uses: actions/upload-artifact@v4
+          go test -v -coverprofile=coverage.txt ./sql/...
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v4
         with:
-          name: coverage-report
-          path: gocov.html
+          token: ${{ secrets.CODECOV_TOKEN }}
