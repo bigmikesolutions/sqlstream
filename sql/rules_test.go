@@ -1,17 +1,14 @@
 package sql_test
 
 import (
-	"errors"
-	"fmt"
 	"testing"
 
-	"sqlstream/sql"
-
 	"github.com/stretchr/testify/assert"
+
+	"sqlstream/sql"
 )
 
-// nolint: err113
-func Test_Reader_ShouldReadRows(t *testing.T) {
+func Test_Rules(t *testing.T) {
 	t.Parallel()
 
 	type testCase struct {
@@ -25,32 +22,40 @@ func Test_Reader_ShouldReadRows(t *testing.T) {
 
 	tests := []testCase{
 		{
-			name: "read rows",
+			name: "any",
 			rows: newTestStructRows([][]any{
 				{"v11", ptr("v12"), 1, 1.3},
 				{"v21", ptr("v22"), 2, 2.3},
 			}),
-			columns: testStructMapping,
+			columns: sql.StructMapping[testStruct]{
+				"string":  sql.Any(func(t *testStruct, v string) { t.String = v }),
+				"stringp": sql.Any(func(t *testStruct, v *string) { t.StringP = v }),
+				"int":     sql.Any(func(t *testStruct, v int) { t.Int = v }),
+				"float32": sql.Any(func(t *testStruct, v float32) { t.Float32 = v }),
+			},
 			expRows: []testStruct{
 				{"v11", ptr("v12"), 1, 1.3},
 				{"v21", ptr("v22"), 2, 2.3},
 			},
 		},
 		{
-			name: "handle error while getting column names",
-			rows: &mockRows{
-				columnsErr: errors.New("columns error"), // nolint:all
+			name: "not null",
+			rows: newTestStructRows([][]any{
+				{"v00", nil, nil, nil},
+				{"v11", ptr("v12"), ptr(1), ptr(1.3)},
+				{"v21", "v22", ptr(2), ptr(2.3)},
+			}),
+			columns: sql.StructMapping[testStruct]{
+				"string":  sql.NotNull("def1", func(t *testStruct, v string) { t.String = v }),
+				"stringp": sql.NotNull("def2", func(t *testStruct, v string) { t.StringP = &v }),
+				"int":     sql.NotNull(-1, func(t *testStruct, v int) { t.Int = v }),
+				"float32": sql.NotNull(-2.5, func(t *testStruct, v float32) { t.Float32 = v }),
 			},
-			columns:      testStructMapping,
-			expReaderErr: fmt.Errorf("column names: %w", errors.New("columns error")), // nolint:all
-		},
-		{
-			name: "handle error while scanning",
-			rows: &mockRows{
-				scanErr: errors.New("columns error"), // nolint:all
+			expRows: []testStruct{
+				{"v00", ptr("def2"), -1, -2.5},
+				{"v11", ptr("v12"), 1, 1.3},
+				{"v21", ptr("v22"), 2, 2.3},
 			},
-			columns:        testStructMapping,
-			expScanningErr: fmt.Errorf("column names: %w", errors.New("columns error")), // nolint:all
 		},
 	}
 

@@ -67,6 +67,24 @@ func (m *mockRows) Scan(dest ...any) error {
 				*value = s
 			}
 
+		case **int:
+			switch s := m.data[m.idx][index].(type) {
+			case int:
+				*value = &s
+
+			case *int:
+				*value = s
+			}
+
+		case **float32:
+			switch s := m.data[m.idx][index].(type) {
+			case *float32:
+				*value = s
+			case *float64:
+				v := float32(*s)
+				*value = &v
+			}
+
 		}
 	}
 
