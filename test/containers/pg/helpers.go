@@ -1,5 +1,5 @@
-// Package db holds test stuff for database.
-package db
+// Package pg holds test stuff for postgres.
+package pg
 
 import (
 	"testing"
