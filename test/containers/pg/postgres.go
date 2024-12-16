@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	_ "github.com/jackc/pgx/v5/stdlib" // drivers
@@ -17,12 +18,17 @@ import (
 
 const (
 	defaultTimeout = 5 * time.Second
-	dbName         = "postgres"
-	dbPassword     = "postgres"
-	dbUser         = "admin"
 	driverName     = "pgx"
-	dbPort         = "5432/tcp"
-	dbInitScript   = "containers/db/init.sh"
+
+	dbName     = "postgres"
+	dbPassword = "postgres"
+	dbUser     = "admin"
+	dbPort     = "5432/tcp"
+
+	noSSL = "sslmode=disable"
+
+	dbInitScript = "containers/pg/init.sh"
+	dbCfg        = "containers/pg/pg.conf"
 )
 
 // CancelFn cancel function for stopping/clearing DB related stuff.
@@ -38,6 +44,7 @@ func Start(ctx context.Context) (*postgres.PostgresContainer, CancelFn, error) {
 		postgres.WithPassword(dbPassword),
 		postgres.WithSQLDriver(driverName),
 		postgres.WithInitScripts(dbInitScript),
+		postgres.WithConfigFile(dbCfg),
 		testcontainers.WithWaitStrategy(
 			wait.ForLog("database system is ready to accept connections").WithOccurrence(2),
 			wait.ForListeningPort(dbPort),
@@ -83,24 +90,20 @@ func ConnectionString(ctx context.Context, c *postgres.PostgresContainer, port i
 	}
 
 	return fmt.Sprintf(
-		"postgres://%s:%s@%s:%d/%s",
+		"postgres://%s:%s@%s:%d/%s?%s",
 		dbUser, dbPassword,
 		host, port,
 		dbName,
+		noSSL,
 	), nil
 }
 
-// ContainerURL create URL for given cotainer.
-func ContainerURL(ctx context.Context, c *postgres.PostgresContainer) (string, error) {
-	host, err := c.Host(ctx)
+// InternalURL create URL for given container in a docker-compose run.
+func InternalURL(ctx context.Context, c *postgres.PostgresContainer) (string, error) {
+	host, err := c.ContainerIP(ctx)
 	if err != nil {
 		return "", err
 	}
 
-	port, err := c.MappedPort(ctx, dbPort)
-	if err != nil {
-		return "", err
-	}
-
-	return fmt.Sprintf("%s:%s", host, port.Port()), nil
+	return fmt.Sprintf("%s:%s", host, strings.ReplaceAll(dbPort, "/tcp", "")), nil
 }

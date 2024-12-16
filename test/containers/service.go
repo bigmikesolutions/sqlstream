@@ -7,7 +7,7 @@ import (
 	"sync"
 
 	"sqlstream/test/containers/pg"
-	"sqlstream/test/containers/toxiproxy"
+	"sqlstream/test/containers/proxy"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
@@ -15,9 +15,9 @@ import (
 
 // Service holds state of started containers.
 type Service struct {
-	pg        *postgres.PostgresContainer
-	pgCancel  pg.CancelFn
-	toxiproxy *toxiproxy.Container
+	pg       *postgres.PostgresContainer
+	pgCancel pg.CancelFn
+	proxy    *proxy.Container
 }
 
 // New start containers.
@@ -39,7 +39,7 @@ func New(ctx context.Context) (*Service, error) {
 	go func() {
 		defer wg.Done()
 		var err error
-		if s.toxiproxy, err = toxiproxy.Start(ctx); err != nil {
+		if s.proxy, err = proxy.Start(ctx); err != nil {
 			errs = append(errs, err)
 		}
 	}()
@@ -54,36 +54,36 @@ func New(ctx context.Context) (*Service, error) {
 	return s, nil
 }
 
-// NewDB creates direct connect to database.
-func (s *Service) NewDB(ctx context.Context) (*sqlx.DB, error) {
+// DB creates direct connect to database.
+func (s *Service) DB(ctx context.Context) (*sqlx.DB, error) {
 	return pg.Connect(ctx, s.pg)
 }
 
-// NewDBProxy creates connection to database via proxy.
-func (s *Service) NewDBProxy(ctx context.Context) (*DBProxy, error) {
-	directURL, err := pg.ContainerURL(ctx, s.pg)
+// DBProxy creates connection to database via proxy.
+func (s *Service) DBProxy(ctx context.Context) (*DBProxy, error) {
+	internalURL, err := pg.InternalURL(ctx, s.pg)
 	if err != nil {
 		return nil, fmt.Errorf("postgres URL: %w", err)
 	}
 
-	proxy, port, err := s.toxiproxy.NewProxy(directURL)
+	upstream, err := s.proxy.Upstream(internalURL)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("proxy for postgres: %w", err)
 	}
 
-	proxyConnStr, err := pg.ConnectionString(ctx, s.pg, port)
+	proxyConnStr, err := pg.ConnectionString(ctx, s.pg, upstream.Port())
 	if err != nil {
-		return nil, fmt.Errorf("postgres connection string: %w", err)
+		return nil, fmt.Errorf("postgres proxy connection string: %w", err)
 	}
 
 	conn, err := pg.ConnectByURL(ctx, proxyConnStr)
 	if err != nil {
-		return nil, fmt.Errorf("postgres connection: %w", err)
+		return nil, fmt.Errorf("postgres proxy connection: %w", err)
 	}
 
 	return &DBProxy{
-		DB:    conn,
-		Proxy: proxy,
+		DB:       conn,
+		Upstream: upstream,
 	}, nil
 }
 
@@ -92,7 +92,7 @@ func (s *Service) Close() {
 	if s.pgCancel != nil {
 		s.pgCancel()
 	}
-	if s.toxiproxy != nil {
-		_ = s.toxiproxy.Close(context.Background())
+	if s.proxy != nil {
+		_ = s.proxy.Close(context.Background())
 	}
 }
