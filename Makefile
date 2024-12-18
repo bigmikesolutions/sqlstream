@@ -25,6 +25,7 @@ go-lint: install-govulncheck install-golangci
 
 .PHONY: go-fumpt
 go-fumpt: install-gofumpt
+	@goimports -local "github.com/bigmikesolutions/sqlstream" -l -w .
 	@./bin/gofumpt -l -w .
 
 .PHONY: govulncheck

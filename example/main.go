@@ -4,10 +4,10 @@ package main
 import (
 	"fmt"
 
-	"sqlstream"
-	"sqlstream/sql"
-
 	"github.com/jmoiron/sqlx"
+
+	"github.com/bigmikesolutions/sqlstream"
+	"github.com/bigmikesolutions/sqlstream/sql"
 )
 
 // Student demo data.

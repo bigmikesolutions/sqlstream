@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"sqlstream/sql"
-	"sqlstream/test/containers/pg"
+	"github.com/bigmikesolutions/sqlstream/sql"
+	"github.com/bigmikesolutions/sqlstream/test/containers/pg"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

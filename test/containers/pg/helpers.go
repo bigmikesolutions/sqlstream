@@ -4,10 +4,10 @@ package pg
 import (
 	"testing"
 
-	"sqlstream"
-	"sqlstream/sql"
-
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bigmikesolutions/sqlstream"
+	"github.com/bigmikesolutions/sqlstream/sql"
 )
 
 // ReadAll reads all data from reader.

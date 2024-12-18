@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"sqlstream"
-
 	"github.com/stretchr/testify/assert"
+
+	"github.com/bigmikesolutions/sqlstream"
 )
 
 type testObject struct {

@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"sqlstream/sql"
+	"github.com/bigmikesolutions/sqlstream/sql"
 )
 
 func Test_Rules(t *testing.T) {

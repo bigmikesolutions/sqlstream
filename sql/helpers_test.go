@@ -1,6 +1,6 @@
 package sql_test
 
-import "sqlstream/sql"
+import "github.com/bigmikesolutions/sqlstream/sql"
 
 type (
 	testStruct struct {
