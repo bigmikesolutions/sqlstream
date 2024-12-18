@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"sqlstream/test/containers"
+	"github.com/bigmikesolutions/sqlstream/test/containers"
 )
 
 const (

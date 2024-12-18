@@ -1,4 +1,4 @@
-module sqlstream
+module github.com/bigmikesolutions/sqlstream
 
 go 1.23
 

@@ -1,7 +1,7 @@
 package containers
 
 import (
-	"sqlstream/test/containers/proxy"
+	"github.com/bigmikesolutions/sqlstream/test/containers/proxy"
 
 	"github.com/jmoiron/sqlx"
 )

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"sqlstream/sql"
+	"github.com/bigmikesolutions/sqlstream/sql"
 
 	"github.com/stretchr/testify/assert"
 )

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"sqlstream"
+	"github.com/bigmikesolutions/sqlstream"
 )
 
 func BenchmarkStream_ReadRows(b *testing.B) {

@@ -1,7 +1,7 @@
 // Package sqlstream provides stream capability for sql.
 package sqlstream
 
-import "sqlstream/sql"
+import "github.com/bigmikesolutions/sqlstream/sql"
 
 type (
 	// Entry single results from a stream.

@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"sync"
 
-	"sqlstream/test/containers/pg"
-	"sqlstream/test/containers/proxy"
+	"github.com/bigmikesolutions/sqlstream/test/containers/pg"
+	"github.com/bigmikesolutions/sqlstream/test/containers/proxy"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"

@@ -1,7 +1,7 @@
 package pg
 
 import (
-	"sqlstream/sql"
+	"github.com/bigmikesolutions/sqlstream/sql"
 )
 
 const (
