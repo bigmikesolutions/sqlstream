@@ -23,7 +23,9 @@ func main() {
 		panic(err)
 	}
 
-	defer db.Close()
+	defer func() {
+		_ = db.Close()
+	}()
 
 	// create mapping to avoid reflection (db annotations in Student struct just to depict DB schema)
 	mapping := sql.StructMapping[Student]{
