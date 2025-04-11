@@ -1,43 +1,44 @@
+version: "2"
 run:
-  go: '1.23'
-  timeout: 5m
-
+  go: "1.24"
 linters:
-  disable-all: true
   enable:
-    - revive
-    - govet
-    - unused
-    - ineffassign
-    - typecheck
-    - goconst
     - copyloopvar
-    - staticcheck
-    - gosimple
-    - unconvert
-    - goconst
-    - goimports
-    - misspell
-    - unparam
     - err113
-    - prealloc
-    - gocritic
-    - gosec
     - errorlint
+    - goconst
+    - gocritic
     - godot
+    - gosec
+    - misspell
     - paralleltest
-    - wastedassign
+    - prealloc
+    - revive
     - tagliatelle
-
-linters-settings:
-  govet:
-    enable-all: true
-    disable:
-      - shadow
-
-issues:
-  exclude-use-default: false
-  exclude-rules:
-    - path: (.+)_test.go
-      linters:
-        - govet
+    - unconvert
+    - unparam
+    - wastedassign
+  settings:
+    govet:
+      disable:
+        - shadow
+      enable-all: true
+  exclusions:
+    generated: lax
+    rules:
+      - linters:
+          - govet
+        path: (.+)_test.go
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
