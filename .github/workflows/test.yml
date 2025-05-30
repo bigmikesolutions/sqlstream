@@ -8,7 +8,7 @@ on:
 
 env:
   GO_VERSION: "1.24"
-  GO_LANG_CI_LINT_VERSION: "v2.0.2"
+  GO_LANG_CI_LINT_VERSION: "v2.1.6"
 
 name: run tests
 jobs:
@@ -23,7 +23,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run linters
-        uses: golangci/golangci-lint-action@v7
+        uses: golangci/golangci-lint-action@v8
         with:
           version: ${{ env.GO_LANG_CI_LINT_VERSION }}
   

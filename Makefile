@@ -1,6 +1,6 @@
-GOLANGCI_VERSION ?= v2.0.2
+GOLANGCI_VERSION ?= v2.1.6
 GOVULNCHECK_VERSION ?= v1.1.4
-GOFUMPT_VERSION ?= v0.7.0
+GOFUMPT_VERSION ?= v0.8.0
 
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
@@ -25,7 +25,7 @@ go-lint: install-govulncheck install-golangci
 
 .PHONY: go-fumpt
 go-fumpt: install-gofumpt
-	@goimports -local "github.com/bigmikesolutions/sqlstream" -l -w .
+	@goimports -l -w .
 	@./bin/gofumpt -l -w .
 
 .PHONY: govulncheck
