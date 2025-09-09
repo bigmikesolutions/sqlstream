@@ -6,7 +6,7 @@ toolchain go1.24.3
 
 require (
 	github.com/Shopify/toxiproxy/v2 v2.12.0
-	github.com/jackc/pgx/v5 v5.7.5
+	github.com/jackc/pgx/v5 v5.7.6
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/stretchr/testify v1.10.0
 	github.com/testcontainers/testcontainers-go v0.37.0
