@@ -1,4 +1,4 @@
-package sql
+package stream
 
 type (
 	// Rows is an interface defined based on sql rows: https://pkg.go.dev/database/sql#Rows to decouple

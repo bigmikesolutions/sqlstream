@@ -1,4 +1,4 @@
-package sql_test
+package stream_test
 
 type mockRows struct {
 	err error

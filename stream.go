@@ -1,7 +1,7 @@
 // Package sqlstream provides stream capability for sql.
 package sqlstream
 
-import "github.com/bigmikesolutions/sqlstream/sql"
+import "github.com/bigmikesolutions/sqlstream/stream"
 
 type (
 	// Entry single results from a stream.
@@ -15,7 +15,7 @@ type (
 )
 
 // Read creates a read-only stream of results from a query.
-func Read[T any](in sql.TRows[T]) ReadStream[T] {
+func Read[T any](in stream.TRows[T]) ReadStream[T] {
 	out := make(chan Entry[T])
 
 	go func() {

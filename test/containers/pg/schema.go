@@ -1,8 +1,6 @@
 package pg
 
-import (
-	"github.com/bigmikesolutions/sqlstream/sql"
-)
+import "github.com/bigmikesolutions/sqlstream/stream"
 
 const (
 	// SelectAllFromStudents test query to get all data from students table.
@@ -18,17 +16,17 @@ type Student struct {
 }
 
 // Mapping mapping for student data.
-var Mapping = sql.StructMapping[Student]{
-	"id": sql.Any(func(s *Student, v string) {
+var Mapping = stream.StructMapping[Student]{
+	"id": stream.Any(func(s *Student, v string) {
 		s.ID = v
 	}),
-	"first_name": sql.Any(func(s *Student, v string) {
+	"first_name": stream.Any(func(s *Student, v string) {
 		s.FirstName = v
 	}),
-	"last_name": sql.Any(func(s *Student, v string) {
+	"last_name": stream.Any(func(s *Student, v string) {
 		s.LastName = v
 	}),
-	"age": sql.Any(func(s *Student, v int) {
+	"age": stream.Any(func(s *Student, v int) {
 		s.Age = v
 	}),
 }

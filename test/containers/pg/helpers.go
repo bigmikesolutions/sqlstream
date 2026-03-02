@@ -7,11 +7,11 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/bigmikesolutions/sqlstream"
-	"github.com/bigmikesolutions/sqlstream/sql"
+	"github.com/bigmikesolutions/sqlstream/stream"
 )
 
 // ReadAll reads all data from reader.
-func ReadAll(reader sql.TRows[Student]) map[string]Student {
+func ReadAll(reader stream.TRows[Student]) map[string]Student {
 	students := make(map[string]Student)
 	for student := range sqlstream.Read(reader) {
 		students[student.Value.ID] = student.Value
