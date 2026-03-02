@@ -1,4 +1,4 @@
-package sql
+package stream
 
 import (
 	"fmt"

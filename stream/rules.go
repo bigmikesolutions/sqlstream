@@ -1,4 +1,4 @@
-package sql
+package stream
 
 // Any scan any value of a field based on type.
 func Any[T, V any](scan func(*T, V)) FieldScanner[T, V] {

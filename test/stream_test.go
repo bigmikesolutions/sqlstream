@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bigmikesolutions/sqlstream/sql"
+	"github.com/bigmikesolutions/sqlstream/stream"
 	"github.com/bigmikesolutions/sqlstream/test/containers/pg"
 
 	"github.com/stretchr/testify/assert"
@@ -28,7 +28,7 @@ func Test_ShouldStreamDataFromPostgres(t *testing.T) {
 	rows, err := pgConn.Queryx(pg.SelectAllFromStudents)
 	require.NoError(t, err, "select error")
 
-	reader, err := sql.NewReader(rows, pg.Mapping)
+	reader, err := stream.NewReader(rows, pg.Mapping)
 	require.NoError(t, err, "reader error")
 
 	students := pg.ReadAll(reader)

@@ -1,12 +1,11 @@
-package sql_test
+package stream_test
 
 import (
 	"errors"
 	"fmt"
 	"testing"
 
-	"github.com/bigmikesolutions/sqlstream/sql"
-
+	"github.com/bigmikesolutions/sqlstream/stream"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,8 +15,8 @@ func Test_Reader_ShouldReadRows(t *testing.T) {
 
 	type testCase struct {
 		name           string
-		rows           sql.Rows
-		columns        sql.StructMapping[testStruct]
+		rows           stream.Rows
+		columns        stream.StructMapping[testStruct]
 		expRows        []testStruct
 		expReaderErr   error
 		expScanningErr error
@@ -57,7 +56,7 @@ func Test_Reader_ShouldReadRows(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			reader, err := sql.NewReader(tt.rows, tt.columns)
+			reader, err := stream.NewReader(tt.rows, tt.columns)
 			assert.Equalf(t, tt.expReaderErr, err, "unexpected new reader err: %s", err)
 
 			if reader != nil {

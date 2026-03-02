@@ -1,4 +1,4 @@
-package sql
+package stream
 
 type (
 	// FieldSetter is a function that sets a value in a target.
