@@ -1,6 +1,6 @@
-GOLANGCI_VERSION ?= v2.1.6
+GOLANGCI_VERSION ?= v2.10.1
 GOVULNCHECK_VERSION ?= v1.1.4
-GOFUMPT_VERSION ?= v0.8.0
+GOFUMPT_VERSION ?= v0.9.2
 
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 

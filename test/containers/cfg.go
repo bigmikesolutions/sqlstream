@@ -22,6 +22,7 @@ type cfg struct {
 type PostgresCfg struct {
 	Name string
 	User string
+	// #nosec G117 (testing)
 	Pass string
 	Port int
 }
