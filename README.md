@@ -2,7 +2,11 @@
 
 # sqlstream
 
-Small library to handle SQL queries as streams (channels).
+<p align="center">
+  <img src="img/sqlstream.png" alt="sqlstream" width="700"/>
+</p>
+
+Go library for processing SQL query results as a data stream. Process large datasets efficiently without loading everything into memory or using reflection.
 
 Main concerns:
 
